@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Dashboard from './components/Dashboard'
+import Home from './components/Home'
 
 import { GlobalProvider } from './context/GlobalState'
 
@@ -16,8 +16,7 @@ export default function ComplexGrid() {
 	return (
 		<GlobalProvider>
 			<div className={classes.root}>
-				{/* <Dashboard /> */}
-				<Dashboard />
+				<Home />
 			</div>
 		</GlobalProvider>
 	)

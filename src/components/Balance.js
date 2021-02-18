@@ -30,8 +30,6 @@ const Balance = () => {
 		}
 	}, [list])
 
-	console.log({ list })
-
 	const classes = useStyles()
 	return (
 		<React.Fragment>
