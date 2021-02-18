@@ -154,7 +154,7 @@ const Home = () => {
 						noWrap
 						className={classes.title}
 					>
-						Ca$h-Flow
+						Ca$hFlow
 					</Typography>
 					{/* <IconButton color='inherit'>
 						<Badge badgeContent={4} color='secondary'>

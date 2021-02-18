@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker'
 import App from './App'
 import theme from './theme'
 import './index.css'
+require('dotenv/config')
 
 ReactDOM.render(
 	<BrowserRouter>
