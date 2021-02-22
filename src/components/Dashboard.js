@@ -1,12 +1,30 @@
-import React, { Fragment, useState, useEffect, useContext } from 'react'
+import React, { Fragment } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
+import Typography from '@material-ui/core/Typography'
+import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import { GlobalContext } from '../context/GlobalState'
-import { VictoryPie } from 'victory'
+import Box from '@material-ui/core/Box'
+
+import PieGraph from './PieGraph'
+import Balance from './Balance'
+
+function SyncInfo() {
+	return (
+		<Typography variant='body2' color='textSecondary' align='center'>
+			Last sync {new Date().getHours()}:{new Date().getMinutes()} /{' '}
+			{new Date().getDate()}-{new Date().getMonth() + 1}-
+			{new Date().getFullYear()}
+		</Typography>
+	)
+}
 
 const useStyles = makeStyles(theme => ({
+	container: {
+		paddingTop: theme.spacing(4),
+		paddingBottom: theme.spacing(2),
+	},
 	paper: {
 		padding: theme.spacing(2),
 		display: 'flex',
@@ -14,78 +32,39 @@ const useStyles = makeStyles(theme => ({
 		flexDirection: 'column',
 	},
 	fixedHeight: {
-		height: 400,
+		height: 280,
 	},
 }))
 
 const Dashboard = () => {
-	const { loading, list } = useContext(GlobalContext)
-	const [data, setData] = useState(null)
 	const classes = useStyles()
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-
-	useEffect(() => {
-		let dataPoints = []
-		if (list !== null) {
-			const totalAmount = list.reduce((acc, el) => {
-				return acc + el.amount
-			}, 0)
-			const totalOutcome = list.reduce((acc, el) => {
-				if (el.category !== 'Income') {
-					return acc + el.amount * -1
-				} else {
-					return acc
-				}
-			}, 0)
-			// console.log({ totalAmount })
-			// console.log({ totalOutcome })
-			list.map(el => {
-				// dataPoints.push({x: el.id})
-				if (el.category !== 'Income') {
-					let x = el.id
-					let y = (el.amount * -1 * 100) / totalOutcome
-					let label = el.category
-					dataPoints.push({ x, y, label })
-				}
-			})
-			// console.log({ dataPoints })
-			setData(dataPoints)
-		}
-		return () => {}
-	}, [list])
-
 	return (
 		<Fragment>
-			<Grid item xs={12} md={8} lg={9}>
-				<Paper className={fixedHeightPaper}>
-					{/* <Chart /> */}
-
-					{/* {list &&
-						list.map((transaction, idx) => {
-							return (
-								<p key={idx}>
-									{transaction.name} ${transaction.amount}
-								</p>
-							)
-						})} */}
-					{data && (
-						<VictoryPie
-							animate={{
-								duration: 2000,
-							}}
-							// height={200}
-							colorScale={['tomato', 'orange', 'gold', 'cyan', 'navy']}
-							data={data}
-							labelRadius={({ innerRadius }) => innerRadius + 15}
-							radius={({ datum }) => 50 + datum.y * 2}
-							innerRadius={20}
-							style={{
-								labels: { fill: 'black', fontSize: 15, fontWeight: 'bold' },
-							}}
-						/>
-					)}
-				</Paper>
-			</Grid>
+			<Container maxWidth='lg' className={classes.container}>
+				<Grid container spacing={3}>
+					{/* Chart */}
+					<PieGraph />
+					{/* Recent Deposits */}
+					<Grid item xs={12} md={4} lg={3}>
+						<Paper className={fixedHeightPaper}>
+							{/* <Deposits /> */}
+							{/* Acá estaban los Depositos Recientes */}
+							<Balance />
+						</Paper>
+					</Grid>
+					{/* Recent Orders */}
+					{/* <Grid item xs={12}>
+							<Paper className={classes.paper}>
+								
+								Acá estaban las Ordenes
+							</Paper>
+						</Grid> */}
+				</Grid>
+				<Box pt={4}>
+					<SyncInfo />
+				</Box>
+			</Container>
 		</Fragment>
 	)
 }

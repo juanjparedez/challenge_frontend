@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Home from './components/Home'
 
 import { GlobalProvider } from './context/GlobalState'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -15,9 +16,11 @@ export default function ComplexGrid() {
 
 	return (
 		<GlobalProvider>
-			<div className={classes.root}>
-				<Home />
-			</div>
+			<Router>
+				<div className={classes.root}>
+					<Home />
+				</div>
+			</Router>
 		</GlobalProvider>
 	)
 }
