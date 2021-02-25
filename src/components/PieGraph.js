@@ -45,6 +45,21 @@ const PieGraph = () => {
 
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
+	// const ColorsByCat = new Map(
+	// 	['Income', '#0088FE'],
+	// 	['Housing', '#00C49F'],
+	// 	['Transportation', '#FFBB28'],
+	// 	['Food', '#FF8042'],
+	// 	['Utilities', '#81e7bb'],
+	// 	['Personal', '#c15fff'],
+	// 	['Entertainment', '#510b34'],
+	// 	['Insurance_HealthCare', '#02f1a2'],
+	// 	['Education', '#c6615d'],
+	// 	['Debt_Payments', '#29543d'],
+	// 	['Giving', '#98be65'],
+	// 	['Saving', '#da1a88']
+	// )
+
 	const COLORS = [
 		'#0088FE',
 		'#00C49F',
@@ -62,89 +77,122 @@ const PieGraph = () => {
 
 	useEffect(() => {
 		if (list) {
-			let innerData = null
-			let outerData = null
-			let byCategory = {
-				Income: 0,
-				Housing: 0,
-				Transportation: 0,
-				Food: 0,
-				Utilities: 0,
-				Personal: 0,
-				Entertainment: 0,
-				Insurance: 0,
-				Education: 0,
-				Debt: 0,
-				Giving: 0,
-				Saving: 0,
-			}
+			let innerData = []
+			let outerData = []
+			let byCategory = new Map()
+			let bySubCategory = new Map()
+			list.sort((a, b) => {
+				let ca = a.category.toLowerCase(),
+					cb = b.category.toLowerCase()
 
-			list.forEach(item => {
+				if (ca < cb) {
+					return -1
+				}
+				if (ca > cb) {
+					return 1
+				}
+				return 0
+			})
+
+			list.forEach((item, index) => {
 				if (item.category !== 'Income') {
+					// console.log('------------------')
+					// console.log(item.category)
+					if (byCategory.has(item.category) === true) {
+						let value = byCategory.get(item.category)
+						// console.log({ value })
+						value.value = value.value + item.amount * -1
+						byCategory.set(item.category, value)
+					} else {
+						// console.log('No hay dentro de byCategory')
+						byCategory.set(item.category, {
+							value: item.amount * -1,
+							color: COLORS[index],
+						})
+					}
+					if (bySubCategory.has(item.subcategory) === true) {
+						let value = bySubCategory.get(item.subcategory)
+						value.value = value.value + item.amount * -1
+						bySubCategory.set(item.subcategory, value)
+					} else {
+						bySubCategory.set(item.subcategory, {
+							value: item.amount * -1,
+							color: byCategory.get(item.category).color,
+						})
+					}
 				}
 			})
+
+			// console.log({ byCategory })
+			let index = 0
+			byCategory.forEach((value, name) => {
+				innerData.push({
+					value: value.value,
+					name,
+					index,
+					color: value.color,
+				})
+				index += 1
+			})
+
+			// console.log({ bySubCategory })
+			let indexS = 0
+			bySubCategory.forEach((value, name) => {
+				outerData.push({
+					value: value.value,
+					name,
+					indexS,
+					color: value.color,
+				})
+				indexS += 1
+			})
+			// console.log({ outerData })
+			setInnerData(innerData)
+			setOuterData(outerData)
 		}
 		return () => {}
 	}, [list])
 
-	const data01 = [
-		{ name: 'Pruba', value: 400, color: '#0088FE' },
-		{ name: 'Group B', value: 300, color: '#00C49F' },
-		{ name: 'Group C', value: 300, color: '#FFBB28' },
-		{ name: 'Group D', value: 200, color: '#FF8042' },
-	]
-	const data02 = [
-		{ name: 'Prueba- jdsajs', value: 100, color: '#0088FE' },
-		{ name: 'A2', value: 300, color: '#0088FE' },
-		{ name: 'B1', value: 100, color: '#0088FE' },
-		{ name: 'B2', value: 80, color: '#00C49F' },
-		{ name: 'B3', value: 40, color: '#00C49F' },
-		{ name: 'B4', value: 30, color: '#FFBB28' },
-		{ name: 'B5', value: 50, color: '#FFBB28' },
-		{ name: 'C1', value: 100, color: '#FFBB28' },
-		{ name: 'C2', value: 200, color: '#FF8042' },
-		{ name: 'D1', value: 150, color: '#FF8042' },
-		{ name: 'D2', value: 50, color: '#FF8042' },
-		{ name: 'D2', value: 50, color: '#FF8042' },
-	]
 	return (
 		<Fragment>
 			<Grid item xs={12} md={8} lg={9}>
-				<Paper item className={fixedHeightPaper}>
-					<PieChart width={400} height={400}>
-						<Pie
-							data={data01}
-							isAnimationActive={true}
-							dataKey='value'
-							cx='50%'
-							cy='50%'
-							outerRadius={50}
-							fill='#8884d8'
-							label
-						>
-							{data01.map((entry, index) => (
-								<Cell key={`cell-${index}`} fill={entry.color} />
-							))}
-						</Pie>
-						<Tooltip />
-						<Pie
-							data={data02}
-							dataKey='value'
-							cx='50%'
-							cy='50%'
-							innerRadius={100}
-							outerRadius={130}
-							fill='#82ca9d'
-							label
-						>
-							{data02.map((entry, index) => (
-								<Cell key={`cell-${index}`} fill={entry.color} />
-							))}
-						</Pie>
-						<Tooltip />
-						<Legend />
-						{/* <Sector /> */}
-					</PieChart>
+				<Paper className={fixedHeightPaper}>
+					{innerData && outerData && (
+						<PieChart width={400} height={400}>
+							<Pie
+								data={innerData}
+								isAnimationActive={true}
+								dataKey='value'
+								cx='50%'
+								cy='50%'
+								outerRadius={50}
+								// fill='#8884d8'
+								label
+							>
+								{innerData.map((entry, index) => (
+									<Cell key={`cell-${index}`} fill={entry.color} />
+								))}
+							</Pie>
+							<Tooltip />
+							<Pie
+								data={outerData}
+								dataKey='value'
+								cx='50%'
+								cy='50%'
+								innerRadius={100}
+								outerRadius={130}
+								// fill='#82ca9d'
+								label
+							>
+								{outerData.map((entry, index) => (
+									<Cell key={`cell-${index}`} fill={entry.color} />
+								))}
+							</Pie>
+							<Tooltip />
+							{/* <Legend /> */}
+							{/* <Sector /> */}
+						</PieChart>
+					)}
 				</Paper>
 			</Grid>
 		</Fragment>
