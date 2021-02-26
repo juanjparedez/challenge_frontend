@@ -279,7 +279,7 @@ export default function EnhancedTable() {
 			// console.log({ totalIncome })
 			// console.log({ totalOutcome })
 			let filteredList = list.filter(el => {
-				if (el.category === 'Income') {
+				if (el.category !== 'Income') {
 					return true
 				}
 			})

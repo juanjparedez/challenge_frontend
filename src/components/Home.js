@@ -19,6 +19,7 @@ import { Switch, useLocation, Route } from 'react-router-dom'
 
 import Dashboard from './Dashboard'
 import Incomes from './Incomes'
+import Expenses from './Expenses'
 
 // import Chart from './Chart'
 // import Deposits from './Deposits'
@@ -178,6 +179,9 @@ const Home = () => {
 					</Route>
 					<Route path='/incomes'>
 						<Incomes />
+					</Route>
+					<Route path='/expenses'>
+						<Expenses />
 					</Route>
 				</Switch>
 			</main>

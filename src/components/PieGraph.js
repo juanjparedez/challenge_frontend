@@ -61,9 +61,9 @@ const PieGraph = () => {
 	// )
 
 	const COLORS = [
-		'#0088FE',
-		'#00C49F',
-		'#FFBB28',
+		'#ff0000',
+		'#ff9900',
+		'#2eb82e',
 		'#FF8042',
 		'#81e7bb',
 		'#c15fff',
