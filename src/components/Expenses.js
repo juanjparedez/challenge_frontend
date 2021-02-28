@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { lighten, makeStyles } from '@material-ui/core/styles'
@@ -16,8 +16,9 @@ import Paper from '@material-ui/core/Paper'
 import Checkbox from '@material-ui/core/Checkbox'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
+import Fab from '@material-ui/core/Fab'
+import AddIcon from '@material-ui/icons/Add'
+import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import { GlobalContext } from '../context/GlobalState'
@@ -204,11 +205,24 @@ const EnhancedTableToolbar = props => {
 					id='tableTitle'
 					component='div'
 				>
-					Incomes
+					Expenses
 				</Typography>
 			)}
 
-			{numSelected > 0 ? (
+			{numSelected === 1 ? (
+				<Fragment>
+					<Tooltip title='Edit'>
+						<IconButton aria-label='edit'>
+							<EditIcon />
+						</IconButton>
+					</Tooltip>
+					<Tooltip title='Delete'>
+						<IconButton aria-label='delete'>
+							<DeleteIcon />
+						</IconButton>
+					</Tooltip>
+				</Fragment>
+			) : numSelected > 1 ? (
 				<Tooltip title='Delete'>
 					<IconButton aria-label='delete'>
 						<DeleteIcon />
@@ -251,6 +265,11 @@ const useStyles = makeStyles(theme => ({
 		top: 20,
 		width: 1,
 	},
+	fab: {
+		position: 'absolute',
+		bottom: theme.spacing(2),
+		right: theme.spacing(2),
+	},
 }))
 
 export default function EnhancedTable() {
@@ -259,6 +278,20 @@ export default function EnhancedTable() {
 	const [totalIncome, setTotalIncome] = useState(null)
 	const [totalOutcome, setTotalOutcome] = useState(null)
 	const [filteredList, setFilteredList] = useState(null)
+	const classes = useStyles()
+	const [order, setOrder] = useState('asc')
+	const [orderBy, setOrderBy] = useState('id')
+	const [selected, setSelected] = useState([])
+	const [page, setPage] = useState(0)
+	const [dense, setDense] = useState(true)
+	const [rowsPerPage, setRowsPerPage] = useState(25)
+
+	const fab = {
+		color: 'primary',
+		className: classes.fab,
+		icon: <AddIcon />,
+		label: 'Add',
+	}
 
 	useEffect(() => {
 		if (list) {
@@ -293,14 +326,6 @@ export default function EnhancedTable() {
 		}
 	}, [list])
 
-	const classes = useStyles()
-	const [order, setOrder] = useState('asc')
-	const [orderBy, setOrderBy] = useState('id')
-	const [selected, setSelected] = useState([])
-	const [page, setPage] = useState(0)
-	const [dense, setDense] = useState(true)
-	const [rowsPerPage, setRowsPerPage] = useState(25)
-
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === 'asc'
 		setOrder(isAsc ? 'desc' : 'asc')
@@ -309,7 +334,7 @@ export default function EnhancedTable() {
 
 	const handleSelectAllClick = event => {
 		if (event.target.checked) {
-			const newSelecteds = list.map(n => n.name)
+			const newSelecteds = filteredList.map(n => n.name)
 			setSelected(newSelecteds)
 			return
 		}
@@ -345,18 +370,8 @@ export default function EnhancedTable() {
 		setPage(0)
 	}
 
-	const handleChangeDense = event => {
-		setDense(event.target.checked)
-	}
-
 	const isSelected = name => selected.indexOf(name) !== -1
 
-	// if (list) {
-	// 	const emptyRows =
-	// 		rowsPerPage - Math.min(rowsPerPage, list.length - page * rowsPerPage)
-	// } else {
-	// 	const emptyRows = 0
-	// }
 	const emptyRows = 0
 	return (
 		<div className={classes.root}>
@@ -435,6 +450,14 @@ export default function EnhancedTable() {
 						onChangePage={handleChangePage}
 						onChangeRowsPerPage={handleChangeRowsPerPage}
 					/>
+
+					<Fab
+						aria-label={fab.label}
+						className={fab.className}
+						color={fab.color}
+					>
+						{fab.icon}
+					</Fab>
 				</Paper>
 			)}
 		</div>
