@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -10,8 +11,14 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 
+import Hidden from '@material-ui/core/Hidden'
+import withWidth from '@material-ui/core/withWidth'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
+
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import CloseIcon from '@material-ui/icons/Close'
 import { mainListItems } from './listItems'
 import { GlobalContext } from '../context/GlobalState'
 
@@ -34,6 +41,9 @@ const useStyles = makeStyles(theme => ({
 	},
 	toolbar: {
 		paddingRight: 24, // keep right padding when drawer closed
+	},
+	hidden: {
+		display: 'none',
 	},
 	toolbarIcon: {
 		display: 'flex',
@@ -107,15 +117,23 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const Home = () => {
+const Home = props => {
 	const { loading, list } = useContext(GlobalContext)
+	const { width } = props
 	const classes = useStyles()
 	const [open, setOpen] = useState(false)
+	const [hidden, setHidden] = useState(false)
+
 	const handleDrawerOpen = () => {
 		setOpen(true)
+		setHidden(false)
 	}
 	const handleDrawerClose = () => {
 		setOpen(false)
+	}
+	const handleDrawerClose2 = () => {
+		setOpen(false)
+		setHidden(true)
 	}
 
 	return (
@@ -145,7 +163,7 @@ const Home = () => {
 						noWrap
 						className={classes.title}
 					>
-						CA$HFlow
+						CA$H Flow
 					</Typography>
 					{/* <IconButton color='inherit'>
 						<Badge badgeContent={4} color='secondary'>
@@ -157,7 +175,11 @@ const Home = () => {
 			<Drawer
 				variant='permanent'
 				classes={{
-					paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+					paper: clsx(
+						classes.drawerPaper,
+						!open && classes.drawerPaperClose,
+						hidden && classes.hidden
+					),
 				}}
 				open={open}
 			>
@@ -165,6 +187,11 @@ const Home = () => {
 					<IconButton onClick={handleDrawerClose}>
 						<ChevronLeftIcon />
 					</IconButton>
+					<Hidden smUp>
+						<IconButton onClick={handleDrawerClose2}>
+							<CloseIcon />
+						</IconButton>
+					</Hidden>
 				</div>
 				<Divider />
 				<List>{mainListItems}</List>
@@ -193,4 +220,8 @@ const Home = () => {
 	)
 }
 
-export default Home
+Home.propTypes = {
+	width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+}
+
+export default withWidth()(Home)

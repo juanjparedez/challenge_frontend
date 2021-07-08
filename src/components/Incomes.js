@@ -135,12 +135,12 @@ const headCells = [
 		label: 'Description',
 	},
 	{ id: 'amount', numeric: true, disablePadding: false, label: 'Amount ($)' },
-	{
-		id: 'category',
-		numeric: false,
-		disablePadding: true,
-		label: 'Category',
-	},
+	// {
+	// 	id: 'category',
+	// 	numeric: false,
+	// 	disablePadding: true,
+	// 	label: 'Category',
+	// },
 	{
 		id: 'subcategory',
 		numeric: false,
@@ -162,17 +162,17 @@ const MenuProps = {
 
 const categories = [
 	'Income',
-	'Housing',
-	'Transportation',
-	'Food',
-	'Utilities',
-	'Personal',
-	'Entertainment',
-	'Insurance_HealthCare',
-	'Education',
-	'Debt_Payments',
-	'Giving',
-	'Saving',
+	// 'Housing',
+	// 'Transportation',
+	// 'Food',
+	// 'Utilities',
+	// 'Personal',
+	// 'Entertainment',
+	// 'Insurance_HealthCare',
+	// 'Education',
+	// 'Debt_Payments',
+	// 'Giving',
+	// 'Saving',
 ]
 
 const subCategories = new Map([
@@ -189,100 +189,100 @@ const subCategories = new Map([
 			'CreditCardRewards',
 		],
 	],
-	[
-		'Housing',
-		[
-			'Mortgage',
-			'Rent',
-			'PropertyTaxes',
-			'HomeownerInsurance',
-			'HomeMaintenanceRepairs',
-			'HomeImprovement',
-		],
-	],
-	[
-		'Transportation',
-		[
-			'CarPayment',
-			'CarMaintenanceRepairs',
-			'CarInsurance',
-			'Fuel',
-			'PublicTransportation',
-			'RideSharing',
-			'Tolls',
-			'ParkingFees',
-			'VehicleRegistrationInspection',
-		],
-	],
-	['Food', ['Groceries', 'Restaurants', 'WorkLunches', 'TakeOut', 'FastFood']],
-	[
-		'Utilities',
-		[
-			'Electricity',
-			'Water',
-			'NaturalGas',
-			'GarbageCollection',
-			'Phone',
-			'Cable',
-			'Internet',
-		],
-	],
-	[
-		'Personal',
-		[
-			'Clothing',
-			'Shoes',
-			'PersonalHygiene',
-			'HouseholdSupplies',
-			'ChildCare',
-			'HairCuts',
-			'GymMembership',
-			'HomeFurnishings',
-		],
-	],
-	[
-		'Entertainment',
-		[
-			'MoviesEvents',
-			'SubscriptionServices',
-			'Vacations',
-			'Hobbies',
-			'DateNights',
-		],
-	],
-	[
-		'Insurance_HealthCare',
-		[
-			'HealthInsurance',
-			'DentalInsurance',
-			'VisionInsurance',
-			'LifeInsurance',
-			'DisabilityInsurance',
-			'PrescriptionsMedicines',
-			'OutHealthcareExpenses',
-		],
-	],
-	[
-		'Education',
-		[
-			'Tuition',
-			'ExtracurricularActivities',
-			'Books',
-			'SchoolSupplies',
-			'Uniforms',
-			'Registration',
-			'OtherFees',
-		],
-	],
-	[
-		'Debt_Payments',
-		['StudentLoans', 'CreditCards', 'PersonalLoans', 'InstallmentLoans'],
-	],
-	['Giving', ['Religious', 'Charities', 'Gifts']],
-	[
-		'Saving',
-		['RetirementAccounts', 'EmergencyFund', 'EducationFund', 'SinkingFund'],
-	],
+	// [
+	// 	'Housing',
+	// 	[
+	// 		'Mortgage',
+	// 		'Rent',
+	// 		'PropertyTaxes',
+	// 		'HomeownerInsurance',
+	// 		'HomeMaintenanceRepairs',
+	// 		'HomeImprovement',
+	// 	],
+	// ],
+	// [
+	// 	'Transportation',
+	// 	[
+	// 		'CarPayment',
+	// 		'CarMaintenanceRepairs',
+	// 		'CarInsurance',
+	// 		'Fuel',
+	// 		'PublicTransportation',
+	// 		'RideSharing',
+	// 		'Tolls',
+	// 		'ParkingFees',
+	// 		'VehicleRegistrationInspection',
+	// 	],
+	// ],
+	// ['Food', ['Groceries', 'Restaurants', 'WorkLunches', 'TakeOut', 'FastFood']],
+	// [
+	// 	'Utilities',
+	// 	[
+	// 		'Electricity',
+	// 		'Water',
+	// 		'NaturalGas',
+	// 		'GarbageCollection',
+	// 		'Phone',
+	// 		'Cable',
+	// 		'Internet',
+	// 	],
+	// ],
+	// [
+	// 	'Personal',
+	// 	[
+	// 		'Clothing',
+	// 		'Shoes',
+	// 		'PersonalHygiene',
+	// 		'HouseholdSupplies',
+	// 		'ChildCare',
+	// 		'HairCuts',
+	// 		'GymMembership',
+	// 		'HomeFurnishings',
+	// 	],
+	// ],
+	// [
+	// 	'Entertainment',
+	// 	[
+	// 		'MoviesEvents',
+	// 		'SubscriptionServices',
+	// 		'Vacations',
+	// 		'Hobbies',
+	// 		'DateNights',
+	// 	],
+	// ],
+	// [
+	// 	'Insurance_HealthCare',
+	// 	[
+	// 		'HealthInsurance',
+	// 		'DentalInsurance',
+	// 		'VisionInsurance',
+	// 		'LifeInsurance',
+	// 		'DisabilityInsurance',
+	// 		'PrescriptionsMedicines',
+	// 		'OutHealthcareExpenses',
+	// 	],
+	// ],
+	// [
+	// 	'Education',
+	// 	[
+	// 		'Tuition',
+	// 		'ExtracurricularActivities',
+	// 		'Books',
+	// 		'SchoolSupplies',
+	// 		'Uniforms',
+	// 		'Registration',
+	// 		'OtherFees',
+	// 	],
+	// ],
+	// [
+	// 	'Debt_Payments',
+	// 	['StudentLoans', 'CreditCards', 'PersonalLoans', 'InstallmentLoans'],
+	// ],
+	// ['Giving', ['Religious', 'Charities', 'Gifts']],
+	// [
+	// 	'Saving',
+	// 	['RetirementAccounts', 'EmergencyFund', 'EducationFund', 'SinkingFund'],
+	// ],
 ])
 
 function getStyles(category, categoryName, theme) {
@@ -727,13 +727,14 @@ export default function EnhancedTable() {
 													key={row.name}
 													selected={isItemSelected}
 												>
-													<TableCell padding='checkbox'>
+													<TableCell align='center' padding='checkbox'>
 														<Checkbox
 															checked={isItemSelected}
 															inputProps={{ 'aria-labelledby': labelId }}
 														/>
 													</TableCell>
 													<TableCell
+														align='center'
 														component='th'
 														id={labelId}
 														scope='row'
@@ -741,11 +742,15 @@ export default function EnhancedTable() {
 													>
 														{row.name}
 													</TableCell>
-													<TableCell align='right'>{row.id}</TableCell>
-													<TableCell align='right'>{row.description}</TableCell>
-													<TableCell align='right'>{row.amount}</TableCell>
-													<TableCell align='right'>{row.category}</TableCell>
-													<TableCell align='right'>{row.subcategory}</TableCell>
+													<TableCell align='center'>{row.id}</TableCell>
+													<TableCell align='center'>
+														{row.description}
+													</TableCell>
+													<TableCell align='center'>{row.amount}</TableCell>
+													{/* <TableCell align='center'>{row.category}</TableCell> */}
+													<TableCell align='center'>
+														{row.subcategory}
+													</TableCell>
 												</TableRow>
 											)
 										})}

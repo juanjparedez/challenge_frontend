@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 		flexDirection: 'column',
 	},
 	fixedHeight: {
-		height: 440,
+		height: 430,
 	},
 }))
 
@@ -158,16 +158,15 @@ const PieGraph = () => {
 			<Grid item xs={12} md={8} lg={9}>
 				<Paper className={fixedHeightPaper}>
 					{innerData && outerData && (
-						<PieChart width={400} height={400}>
+						<PieChart width={330} height={330}>
 							<Pie
 								data={innerData}
 								isAnimationActive={true}
 								dataKey='value'
 								cx='50%'
 								cy='50%'
-								outerRadius={50}
+								outerRadius={65}
 								// fill='#8884d8'
-								label
 							>
 								{innerData.map((entry, index) => (
 									<Cell key={`cell-${index}`} fill={entry.color} />
@@ -179,8 +178,8 @@ const PieGraph = () => {
 								dataKey='value'
 								cx='50%'
 								cy='50%'
-								innerRadius={100}
-								outerRadius={130}
+								innerRadius={75}
+								outerRadius={100}
 								// fill='#82ca9d'
 								label
 							>

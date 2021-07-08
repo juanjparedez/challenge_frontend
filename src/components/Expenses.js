@@ -411,7 +411,7 @@ export default function EnhancedTable() {
 												key={row.name}
 												selected={isItemSelected}
 											>
-												<TableCell padding='checkbox'>
+												<TableCell align='center' padding='checkbox'>
 													<Checkbox
 														checked={isItemSelected}
 														inputProps={{ 'aria-labelledby': labelId }}
@@ -422,14 +422,15 @@ export default function EnhancedTable() {
 													id={labelId}
 													scope='row'
 													padding='none'
+													align='center'
 												>
 													{row.name}
 												</TableCell>
-												<TableCell align='right'>{row.id}</TableCell>
-												<TableCell align='right'>{row.description}</TableCell>
-												<TableCell align='right'>{row.amount}</TableCell>
-												<TableCell align='right'>{row.category}</TableCell>
-												<TableCell align='right'>{row.subcategory}</TableCell>
+												<TableCell align='center'>{row.id}</TableCell>
+												<TableCell align='center'>{row.description}</TableCell>
+												<TableCell align='center'>{row.amount}</TableCell>
+												<TableCell align='center'>{row.category}</TableCell>
+												<TableCell align='center'>{row.subcategory}</TableCell>
 											</TableRow>
 										)
 									})}
